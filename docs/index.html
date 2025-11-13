@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitcoin Overloard Intelligence Dashboard</title>
+    <link rel="stylesheet" href="../static/css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-bitcoin"></i>
+                    <h1>Bitcoin Overloard</h1>
+                </div>
+                <div class="header-info">
+                    <span id="last-update">Last Update: Never</span>
+                    <span class="status-indicator" id="connection-status">
+                        <i class="fas fa-circle"></i> Disconnected
+                    </span>
+                </div>
+            </div>
+        </header>
+
+        <main class="dashboard-main">
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Bitcoin Price</h3>
+                    </div>
+                    <div class="metric-value" id="btc-price">$--,---</div>
+                    <div class="metric-change" id="btc-change">
+                        <span class="change-value">---%</span>
+                        <span class="change-period">24h</span>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <i class="fas fa-brain"></i>
+                        <h3>AI Sentiment</h3>
+                    </div>
+                    <div class="metric-value" id="ai-sentiment">---</div>
+                    <div class="metric-details">
+                        <div class="sentiment-bar">
+                            <div class="sentiment-fill" id="sentiment-fill"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <i class="fas fa-signal"></i>
+                        <h3>Market Trend</h3>
+                    </div>
+                    <div class="metric-value" id="market-trend">---</div>
+                    <div class="metric-details">
+                        <span id="trend-confidence">Confidence: --%</span>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <i class="fas fa-network-wired"></i>
+                        <h3>Model Consensus</h3>
+                    </div>
+                    <div class="metric-value" id="consensus-score">--%</div>
+                    <div class="metric-details">
+                        <span id="active-models">- models active</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="charts-section">
+                <div class="chart-card large">
+                    <div class="chart-header">
+                        <h3><i class="fas fa-chart-area"></i> Price & Prediction Timeline</h3>
+                        <div class="chart-controls">
+                            <button class="chart-btn active" data-range="24h">24H</button>
+                            <button class="chart-btn" data-range="7d">7D</button>
+                            <button class="chart-btn" data-range="30d">30D</button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="price-chart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3><i class="fas fa-robot"></i> AI Model Predictions</h3>
+                    </div>
+                    <div class="predictions-list" id="predictions-list">
+                        <div class="prediction-item">
+                            <span class="model-name">Loading...</span>
+                            <span class="prediction-value">--</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="analysis-section">
+                <div class="analysis-card">
+                    <div class="analysis-header">
+                        <h3><i class="fas fa-search-dollar"></i> Pattern Detection</h3>
+                    </div>
+                    <div class="patterns-list" id="patterns-list">
+                        <div class="pattern-item">
+                            <i class="fas fa-spinner fa-spin"></i> Analyzing patterns...
+                        </div>
+                    </div>
+                </div>
+
+                <div class="analysis-card">
+                    <div class="analysis-header">
+                        <h3><i class="fas fa-newspaper"></i> Recent Signals</h3>
+                    </div>
+                    <div class="signals-list" id="signals-list">
+                        <div class="signal-item">
+                            <span class="signal-time">--:--</span>
+                            <span class="signal-text">Waiting for data...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reports-section">
+                <div class="reports-card">
+                    <div class="reports-header">
+                        <h3><i class="fas fa-file-alt"></i> Automated Reports</h3>
+                        <button class="refresh-btn" id="refresh-reports">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </div>
+                    <div class="reports-list" id="reports-list">
+                        <div class="report-item">
+                            <span class="report-name">No reports available</span>
+                            <span class="report-date">--</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="dashboard-footer">
+            <p>Bitcoin Overloard Intelligence System | AI-powered cryptocurrency trading analysis</p>
+            <p>
+                <a href="https://github.com/Grumpified-OGGVCT/Bitcoin_Overloard" target="_blank">
+                    <i class="fab fa-github"></i> GitHub Repository
+                </a>
+            </p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="../static/js/dashboard.js"></script>
+</body>
+</html>
