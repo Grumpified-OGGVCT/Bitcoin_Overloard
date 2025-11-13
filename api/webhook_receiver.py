@@ -11,9 +11,14 @@ import json
 import os
 from datetime import datetime
 from pathlib import Path
+import logging
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for dashboard access
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Data storage
 DATA_FILE = Path(__file__).parent / 'data' / 'latest_data.json'
@@ -44,7 +49,7 @@ def load_data():
             with open(DATA_FILE, 'r') as f:
                 return json.load(f)
         except Exception as e:
-            print(f"Error loading data: {e}")
+            logger.error(f"Error loading data: {e}")
     return DEFAULT_DATA.copy()
 
 
@@ -56,7 +61,7 @@ def save_data(data):
             json.dump(data, f, indent=2)
         return True
     except Exception as e:
-        print(f"Error saving data: {e}")
+        logger.error(f"Error saving data: {e}")
         return False
 
 
@@ -138,7 +143,8 @@ def webhook_general():
             return jsonify({"error": "Failed to save data"}), 500
             
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        logger.error(f"Error in webhook: {e}")
+        return jsonify({"error": "Internal server error"}), 500
 
 
 @app.route('/api/webhook/price', methods=['POST'])
@@ -167,7 +173,8 @@ def webhook_price():
         return jsonify({"status": "success", "message": "Price updated"}), 200
         
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        logger.error(f"Error updating price: {e}")
+        return jsonify({"error": "Internal server error"}), 500
 
 
 @app.route('/api/webhook/predictions', methods=['POST'])
@@ -198,7 +205,8 @@ def webhook_predictions():
         return jsonify({"status": "success", "message": "Predictions updated"}), 200
         
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        logger.error(f"Error updating predictions: {e}")
+        return jsonify({"error": "Internal server error"}), 500
 
 
 @app.route('/api/webhook/patterns', methods=['POST'])
@@ -225,7 +233,8 @@ def webhook_patterns():
         return jsonify({"status": "success", "message": "Patterns updated"}), 200
         
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        logger.error(f"Error updating patterns: {e}")
+        return jsonify({"error": "Internal server error"}), 500
 
 
 @app.route('/api/webhook/signals', methods=['POST'])
@@ -263,7 +272,8 @@ def webhook_signals():
         return jsonify({"status": "success", "message": "Signal added"}), 200
         
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        logger.error(f"Error adding signal: {e}")
+        return jsonify({"error": "Internal server error"}), 500
 
 
 @app.route('/api/webhook/reports', methods=['POST'])
@@ -301,7 +311,8 @@ def webhook_reports():
         return jsonify({"status": "success", "message": "Report added"}), 200
         
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        logger.error(f"Error adding report: {e}")
+        return jsonify({"error": "Internal server error"}), 500
 
 
 if __name__ == '__main__':
@@ -309,5 +320,7 @@ if __name__ == '__main__':
     if not DATA_FILE.exists():
         save_data(DEFAULT_DATA)
     
-    # Run the Flask app
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    # Run the Flask app (debug mode disabled for security)
+    # For development, set FLASK_ENV=development environment variable
+    debug_mode = os.getenv('FLASK_ENV') == 'development'
+    app.run(host='0.0.0.0', port=5000, debug=debug_mode)
